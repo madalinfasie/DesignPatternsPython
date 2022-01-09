@@ -58,7 +58,7 @@ class TravelBuilder(abc.ABC):
         pass
 
 
-class TravelPlan(TravelBuilder):
+class TravelPlanBuilder(TravelBuilder):
     def __init__(self):
         self.reset()
 
@@ -82,7 +82,7 @@ class TravelPlan(TravelBuilder):
         return travel
 
 
-class TravelBlog(TravelBuilder):
+class TravelBlogBuilder(TravelBuilder):
     def __init__(self):
         self.reset()
 
@@ -102,7 +102,7 @@ class TravelBlog(TravelBuilder):
         self._travel_post.accomodation = f'We had an amazing stay at {hotel_name} ' \
             f'located on {street} street number {number}'
 
-    def get_result(self) -> TravelDetails:
+    def get_result(self) -> TravelBlogPost:
         travel_post = self._travel_post
         self.reset()
         return travel_post
@@ -131,11 +131,11 @@ if __name__ == '__main__':
     agency = TravelAgency()
 
     # Travel to Budapest
-    travel_builder = TravelPlan()
+    travel_builder = TravelPlanBuilder()
     agency.travel_to_budapest_in_summer(travel_builder)
     travel = travel_builder.get_result()
 
-    blog_builder = TravelBlog()
+    blog_builder = TravelBlogBuilder()
     agency.travel_to_budapest_in_summer(blog_builder)
     travel_blog = blog_builder.get_result()
 
