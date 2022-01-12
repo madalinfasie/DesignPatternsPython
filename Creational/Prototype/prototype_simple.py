@@ -9,7 +9,7 @@ import abc
 
 
 class DishPrototype(abc.ABC):
-    def clone(self):
+    def clone(self) -> 'DishPrototype':
         pass
 
 

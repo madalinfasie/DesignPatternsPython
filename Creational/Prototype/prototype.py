@@ -4,6 +4,9 @@ cloning inanimate objects is now possible.
 
 A new restaurant tries to make a profit by cloning its dishes
 instead of recreating them each time.
+
+The restaurant has a menu that makes it easier for customers
+to make their order
 """
 import abc
 import typing as t
@@ -19,37 +22,23 @@ class Menu:
     def __init__(self):
         self.items: t.Dict[str, DishPrototype] = {}
 
-    def add(self, name: str, dish: DishPrototype):
+    def add(self, name: str, dish: DishPrototype) -> None:
         self.items[name] = dish
 
-    def remove(self, name):
+    def remove(self, name: str) -> None:
         if name in self.items:
             self.items.pop(name)
 
     def get_by_name(self, name: str) -> DishPrototype:
         return self.items[name].clone()
 
-    def get_by_ingredients(self, ingredient: str) -> DishPrototype:
+    def get_by_ingredient(self, ingredient: str) -> DishPrototype:
         for dish in self.items.values():
             if ingredient in dish.ingredients:
                 return dish.clone()
 
 
-class PizzaPrototype(DishPrototype):
-    def __init__(self, size: int):
-        self.size = size
-        self.ingredients = []
-
-    def _clone(self, prototype: DishPrototype) -> DishPrototype:
-        clone = PizzaPrototype(size=prototype.size)
-        clone.ingredients = prototype.ingredients
-        return clone
-
-    def clone(self) -> DishPrototype:
-        return self._clone(self)
-
-
-class PizzaProsciuttoFunghi(PizzaPrototype):
+class PizzaProsciuttoFunghi(DishPrototype):
     def __init__(self, size: int, extra_mozzarella: bool = False):
         self.size = size
         self.extra_mozzarella = extra_mozzarella
@@ -62,13 +51,13 @@ class PizzaProsciuttoFunghi(PizzaPrototype):
 
         print(text)
 
-    def _clone(self, prototype: PizzaPrototype) -> PizzaPrototype:
+    def _clone(self, prototype: DishPrototype) -> DishPrototype:
         clone = PizzaProsciuttoFunghi(size=prototype.size)
         clone.extra_mozzarella = prototype.extra_mozzarella
         clone.ingredients = prototype.ingredients
         return clone
 
-    def clone(self) -> PizzaPrototype:
+    def clone(self) -> DishPrototype:
         return self._clone(self)
 
 
@@ -111,7 +100,7 @@ class Restaurant:
     def build_order(self) -> None:
         self.order.append(self.menu.get_by_name('Prosciutto e Funghi'))
         self.order.append(self.menu.get_by_name('Spaghetti Carbonara'))
-        self.order.append(self.menu.get_by_ingredients('mozzarella'))
+        self.order.append(self.menu.get_by_ingredient('mozzarella'))
 
     def serve(self) -> None:
         for dish in self.order:
