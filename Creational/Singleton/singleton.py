@@ -1,5 +1,8 @@
 """
-Implement a configuration class that acts as a singleton
+We want to develop an app that has a single configuration file.
+Make the configuration class a Singleton.
+
+To test that we use the same instance, I used the id function.
 """
 
 class SingletonMeta(type):
@@ -11,7 +14,7 @@ class SingletonMeta(type):
         return self.__class__._instance
 
 
-class Config(metaclass=SingletonMeta):
+class ConfigSingleton(metaclass=SingletonMeta):
     def __init__(self, path: str):
         self.path = path
 
@@ -23,7 +26,7 @@ class Config(metaclass=SingletonMeta):
         }
 
 
-c1 = Config()
-c2 = Config()
+config_app1 = ConfigSingleton('path/to/config.json')
+config_app2 = ConfigSingleton('path/to/config.json')
 
-print(c1 is c2)
+print(config_app1 is config_app2)

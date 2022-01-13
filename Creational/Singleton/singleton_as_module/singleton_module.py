@@ -1,4 +1,4 @@
-class Config:
+class ConfigSingleton:
     def __init__(self, path: str):
         self.path = path
 
@@ -10,5 +10,5 @@ class Config:
         }
 
 
-CONFIG = Config('path/to/config/file.json')
-print('INSIDE singleton_module', id(CONFIG))
+CONFIG = ConfigSingleton('path/to/config/file.json')
+print(f'INSIDE {__name__}', id(CONFIG))
