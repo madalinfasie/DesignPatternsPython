@@ -9,7 +9,7 @@ import abc
 
 
 class DishPrototype(abc.ABC):
-    def clone(self) -> 'DishPrototype':
+    def clone(self) -> "DishPrototype":
         pass
 
 
@@ -23,9 +23,9 @@ class PizzaProsciuttoFunghi(DishPrototype):
             self.extra_mozzarella = prototype.extra_mozzarella
 
     def plate(self) -> None:
-        text = f'Serving a pizza prosciutto e fungi of size {self.size}'
+        text = f"Serving a pizza prosciutto e fungi of size {self.size}"
         if self.extra_mozzarella:
-            text += ' with extra mozzarella'
+            text += " with extra mozzarella"
 
         print(text)
 
@@ -39,16 +39,16 @@ class SpaghettiCarbonara(DishPrototype):
         self.extra_parmigiano = extra_parmigiano
 
     def plate(self) -> None:
-        text = f'Serving a spagetti carbonara {self.weight}g'
+        text = f"Serving a spagetti carbonara {self.weight}g"
         if self.extra_parmigiano:
-            text += ' with extra parmigiano'
+            text += " with extra parmigiano"
 
         print(text)
 
     def clone(self) -> DishPrototype:
         return SpaghettiCarbonara(
-            weight=self.weight,
-            extra_parmigiano=self.extra_parmigiano)
+            weight=self.weight, extra_parmigiano=self.extra_parmigiano
+        )
 
 
 class Restaurant:
@@ -74,7 +74,7 @@ class Restaurant:
         self.order = []
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     restaurant = Restaurant()
     restaurant.build_order()
     restaurant.serve()

@@ -37,7 +37,7 @@ class PaintedArt(ArtPiece):
 
 class Painter:
     def draw(self, order_type: OrderType) -> ArtPiece:
-        """ The factory method for creating an ArtPiece based on an OrderType """
+        """The factory method for creating an ArtPiece based on an OrderType"""
         if order_type == OrderType.PAINTING_ORDER:
             return PaintedArt()
         elif order_type == OrderType.DIGITAL_ORDER:

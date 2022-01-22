@@ -4,11 +4,8 @@ class ConfigSingleton:
 
     def get_config(self) -> dict:
         # Open the file from self.path and load the values into a dictionary
-        return {
-            'HEIGHT': 200,
-            'WIDTH': 300
-        }
+        return {"HEIGHT": 200, "WIDTH": 300}
 
 
-CONFIG = ConfigSingleton('path/to/config/file.json')
-print(f'INSIDE {__name__}', id(CONFIG))
+CONFIG = ConfigSingleton("path/to/config/file.json")
+print(f"INSIDE {__name__}", id(CONFIG))

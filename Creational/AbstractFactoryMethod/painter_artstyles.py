@@ -39,22 +39,22 @@ class DigitalArt(abc.ABC):
 
 class SurrealPhysicalArt(PhysicalArt):
     def display(self) -> None:
-        print('Melted watches on a field on canvas')
+        print("Melted watches on a field on canvas")
 
 
 class MinimalismPhysicalArt(PhysicalArt):
     def display(self) -> None:
-        print('Single drop of water on canvas')
+        print("Single drop of water on canvas")
 
 
 class SurrealDigitalArt(DigitalArt):
     def display(self) -> None:
-        print('Weird looking animals with long legs as digital art')
+        print("Weird looking animals with long legs as digital art")
 
 
 class MinimalismDigitalArt(DigitalArt):
     def display(self) -> None:
-        print('Single object in the middle of the screen as digital art')
+        print("Single object in the middle of the screen as digital art")
 
 
 #### Factories ####
@@ -93,22 +93,21 @@ class Website:
         elif order_type == OrderType.PAINTING_ORDER:
             art_piece = self.painter.draw_physical()
         else:
-            raise UnknownPaintingStyle('Not a valid order type')
+            raise UnknownPaintingStyle("Not a valid order type")
 
         art_piece.display()
 
 
-if __name__ == '__main__':
-    print('# User opens the page for Surrealism category')
+if __name__ == "__main__":
+    print("# User opens the page for Surrealism category")
     factory = SurrealismPainterFactory()
     website = Website(factory)
     website.submit_order(OrderType.PAINTING_ORDER)
     website.submit_order(OrderType.DIGITAL_ORDER)
 
     print()
-    print('# User opens the page for Minimalism category')
+    print("# User opens the page for Minimalism category")
     factory = MinimalismPainterFactory()
     website = Website(factory)
     website.submit_order(OrderType.PAINTING_ORDER)
     website.submit_order(OrderType.DIGITAL_ORDER)
-

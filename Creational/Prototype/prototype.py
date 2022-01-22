@@ -13,12 +13,13 @@ import typing as t
 
 
 class DishPrototype(abc.ABC):
-    def clone(self) -> 'DishPrototype':
+    def clone(self) -> "DishPrototype":
         pass
 
 
 class Menu:
-    """ Acts as a prototype registry """
+    """Acts as a prototype registry"""
+
     def __init__(self):
         self.items: t.Dict[str, DishPrototype] = {}
 
@@ -42,12 +43,12 @@ class PizzaProsciuttoFunghi(DishPrototype):
     def __init__(self, size: int, extra_mozzarella: bool = False):
         self.size = size
         self.extra_mozzarella = extra_mozzarella
-        self.ingredients = ['mozzarella', 'prosciutto', 'mushrooms']
+        self.ingredients = ["mozzarella", "prosciutto", "mushrooms"]
 
     def plate(self) -> None:
-        text = f'Serving a pizza prosciutto e fungi of size {self.size}'
+        text = f"Serving a pizza prosciutto e fungi of size {self.size}"
         if self.extra_mozzarella:
-            text += ' with extra mozzarella'
+            text += " with extra mozzarella"
 
         print(text)
 
@@ -65,19 +66,19 @@ class SpaghettiCarbonara(DishPrototype):
     def __init__(self, weight: int = 300, extra_parmigiano: bool = False):
         self.weight = weight
         self.extra_parmigiano = extra_parmigiano
-        self.ingredients = ['spaghetti', 'egg', 'pancetta']
+        self.ingredients = ["spaghetti", "egg", "pancetta"]
 
     def plate(self) -> None:
-        text = f'Serving a spagetti carbonara {self.weight}g'
+        text = f"Serving a spagetti carbonara {self.weight}g"
         if self.extra_parmigiano:
-            text += ' with extra parmigiano'
+            text += " with extra parmigiano"
 
         print(text)
 
     def _clone(self, prototype: DishPrototype) -> DishPrototype:
         clone = SpaghettiCarbonara(
-            weight=self.weight,
-            extra_parmigiano=self.extra_parmigiano)
+            weight=self.weight, extra_parmigiano=self.extra_parmigiano
+        )
         clone.ingredients = prototype.ingredients
         return clone
 
@@ -94,13 +95,13 @@ class Restaurant:
         pizza = PizzaProsciuttoFunghi(size=32, extra_mozzarella=True)
         spaghetti = SpaghettiCarbonara(weight=400)
 
-        self.menu.add('Prosciutto e Funghi', pizza)
-        self.menu.add('Spaghetti Carbonara', spaghetti)
+        self.menu.add("Prosciutto e Funghi", pizza)
+        self.menu.add("Spaghetti Carbonara", spaghetti)
 
     def build_order(self) -> None:
-        self.order.append(self.menu.get_by_name('Prosciutto e Funghi'))
-        self.order.append(self.menu.get_by_name('Spaghetti Carbonara'))
-        self.order.append(self.menu.get_by_ingredient('mozzarella'))
+        self.order.append(self.menu.get_by_name("Prosciutto e Funghi"))
+        self.order.append(self.menu.get_by_name("Spaghetti Carbonara"))
+        self.order.append(self.menu.get_by_ingredient("mozzarella"))
 
     def serve(self) -> None:
         for dish in self.order:
@@ -109,7 +110,7 @@ class Restaurant:
         self.order = []
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     restaurant = Restaurant()
     restaurant.build_menu()
     restaurant.build_order()

@@ -17,11 +17,12 @@ class WrongSubmissionType(Exception):
 
 
 class Artwork(abc.ABC):
-    """ This class (and its children) is not part of the pattern.
+    """This class (and its children) is not part of the pattern.
 
     Its purpose is to show how to handle different return types from
     the adapter and the adaptee
     """
+
     def __init__(self, message: str):
         self.message = message
 
@@ -45,31 +46,33 @@ class PaintingArt(Artwork):
 
 
 class Painter:
-    """ The painter knows how to draw PaintingArt
+    """The painter knows how to draw PaintingArt
     and shows the results in person.
 
     This class can be seen as an external module that
     we cannot control.
     """
+
     def __init__(self):
         self.painting = None
 
     def draw(self) -> None:
-        self.painting = PaintingArt('Strong message on canvas')
+        self.painting = PaintingArt("Strong message on canvas")
 
     def show_results(self) -> PaintingArt:
         return self.painting
 
 
 class GraphicDesigner(CompanyDesigner):
-    """ This acts as our class upon which all the other
+    """This acts as our class upon which all the other
     functionalities are based on.
     """
+
     def __init__(self):
         self.digital = None
 
     def draw(self) -> None:
-        self.digital = DigitalArt('Motivational message in digital form')
+        self.digital = DigitalArt("Motivational message in digital form")
 
     def send_email(self) -> DigitalArt:
         return self.digital
@@ -81,7 +84,7 @@ class PainterAdapter(CompanyDesigner):
         self.digital = None
 
     def draw(self) -> None:
-        """ Make the painter draw the pucture and extract the results
+        """Make the painter draw the pucture and extract the results
         into a DigitalArt object.
 
         This method shows how an adapter can handle different return types
@@ -93,7 +96,7 @@ class PainterAdapter(CompanyDesigner):
         self.digital = DigitalArt(painting.message)
 
     def send_email(self) -> DigitalArt:
-        """ This method is named to match the CompanyDesigner interface.
+        """This method is named to match the CompanyDesigner interface.
 
         This method is meant to show how the adapter can handle
         different method names in the interface.
@@ -111,12 +114,14 @@ class Company:
 
     def check_submission(self, submission: Artwork) -> None:
         if not isinstance(submission, DigitalArt):
-            raise WrongSubmissionType('Wrong submission type! Only digital arts are accepted')
+            raise WrongSubmissionType(
+                "Wrong submission type! Only digital arts are accepted"
+            )
 
-        print(f'Amazing art about: {submission.message}')
+        print(f"Amazing art about: {submission.message}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     painter = Painter()
     graphic_designer = GraphicDesigner()
 
@@ -137,11 +142,11 @@ if __name__ == '__main__':
         painter_submission = company.ask_for_submission(painter)
         company.check_submission(painter_submission)
     except AttributeError as e:
-        print(f'[FAILED] {e}')
+        print(f"[FAILED] {e}")
 
     try:
         # This will raise Wrong submission type
         painting = painter.show_results()
         company.check_submission(painting)
     except WrongSubmissionType as e:
-        print(f'[FAILED] {e}')
+        print(f"[FAILED] {e}")

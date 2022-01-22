@@ -20,12 +20,14 @@ class TravelDetails:
         self.accomodation: str = None
 
     def __str__(self) -> str:
-        return ', '.join([
-            self.destination or '',
-            self.depart_date.strftime('%Y-%m-%d %H:%M') or '',
-            self.return_date.strftime('%Y-%m-%d %H:%M') or '',
-            self.accomodation or ''
-        ])
+        return ", ".join(
+            [
+                self.destination or "",
+                self.depart_date.strftime("%Y-%m-%d %H:%M") or "",
+                self.return_date.strftime("%Y-%m-%d %H:%M") or "",
+                self.accomodation or "",
+            ]
+        )
 
 
 class TravelBlogPost:
@@ -36,12 +38,14 @@ class TravelBlogPost:
         self.accomodation: str = None
 
     def article(self) -> str:
-        return '.\n'.join([
-            self.destination or '',
-            self.depart_date or '',
-            self.return_date or '',
-            self.accomodation or ''
-        ])
+        return ".\n".join(
+            [
+                self.destination or "",
+                self.depart_date or "",
+                self.return_date or "",
+                self.accomodation or "",
+            ]
+        )
 
 
 class TravelBuilder(abc.ABC):
@@ -73,7 +77,7 @@ class TravelPlanBuilder(TravelBuilder):
         self._travel.return_date = return_date
 
     def build_accomodation(self, hotel_name: str, street: str, number: int) -> None:
-        address = f'{hotel_name} - Str. {street} No. {number}'
+        address = f"{hotel_name} - Str. {street} No. {number}"
         self._travel.accomodation = address
 
     def get_result(self) -> TravelDetails:
@@ -90,17 +94,21 @@ class TravelBlogBuilder(TravelBuilder):
         self._travel_post = TravelBlogPost()
 
     def build_destination(self, destination: str) -> None:
-        self._travel_post.destination = f'An adventure in {destination}'
+        self._travel_post.destination = f"An adventure in {destination}"
 
     def build_flight(self, depart_date: datetime, return_date: datetime) -> None:
-        formatted_depart = depart_date.strftime('%A %d %B %H:%M')
-        formatted_return = return_date.strftime('%A %d %B %H:%M')
-        self._travel_post.depart_date = f'The departure was on {formatted_depart}'
-        self._travel_post.return_date = f'No matter how much we loved it, we had to go back on {formatted_return}'
+        formatted_depart = depart_date.strftime("%A %d %B %H:%M")
+        formatted_return = return_date.strftime("%A %d %B %H:%M")
+        self._travel_post.depart_date = f"The departure was on {formatted_depart}"
+        self._travel_post.return_date = (
+            f"No matter how much we loved it, we had to go back on {formatted_return}"
+        )
 
     def build_accomodation(self, hotel_name: str, street: str, number: int) -> None:
-        self._travel_post.accomodation = f'We had an amazing stay at {hotel_name} ' \
-            f'located on {street} street number {number}'
+        self._travel_post.accomodation = (
+            f"We had an amazing stay at {hotel_name} "
+            f"located on {street} street number {number}"
+        )
 
     def get_result(self) -> TravelBlogPost:
         travel_post = self._travel_post
@@ -111,23 +119,23 @@ class TravelBlogBuilder(TravelBuilder):
 class TravelAgency:
     def travel_to_budapest_in_summer(self, builder: TravelBuilder) -> None:
         builder.reset()
-        builder.build_destination('Budapest')
+        builder.build_destination("Budapest")
         builder.build_flight(
             depart_date=datetime(2022, 7, 2, 5, 10),
-            return_date=datetime(2022, 7, 7, 7, 0)
+            return_date=datetime(2022, 7, 7, 7, 0),
         )
-        builder.build_accomodation(hotel_name='Ibis', street='Szalloda', number=41)
+        builder.build_accomodation(hotel_name="Ibis", street="Szalloda", number=41)
 
     def travel_to_athens(self, builder: TravelBuilder) -> None:
         builder.reset()
-        builder.build_destination('Athens')
+        builder.build_destination("Athens")
         builder.build_flight(
             depart_date=datetime(2022, 2, 2, 12, 30),
-            return_date=datetime(2022, 2, 5, 3, 15)
+            return_date=datetime(2022, 2, 5, 3, 15),
         )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     agency = TravelAgency()
 
     # Travel to Budapest
@@ -139,8 +147,8 @@ if __name__ == '__main__':
     agency.travel_to_budapest_in_summer(blog_builder)
     travel_blog = blog_builder.get_result()
 
-    print('Travel details:', travel)
-    print('Travel blog:', travel_blog.article())
+    print("Travel details:", travel)
+    print("Travel blog:", travel_blog.article())
 
     # Travel to Athens
     agency.travel_to_athens(travel_builder)
@@ -149,5 +157,5 @@ if __name__ == '__main__':
     agency.travel_to_athens(blog_builder)
     travel_blog = blog_builder.get_result()
 
-    print('Travel details:', travel)
-    print('Travel blog:', travel_blog.article())
+    print("Travel details:", travel)
+    print("Travel blog:", travel_blog.article())
