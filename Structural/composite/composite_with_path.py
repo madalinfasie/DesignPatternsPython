@@ -10,7 +10,6 @@ Build the structure for the storage system that can do the following:
 
 import abc
 import os
-import random
 import typing as t
 
 
@@ -43,7 +42,7 @@ class File(Item):
     def get_path(self) -> str:
         return os.path.join(self.parent.get_path(), self.name)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'File({self.name})'
 
 
@@ -51,33 +50,33 @@ class Folder(Item):
     def __init__(self, name: str, parent: Item = None):
         self.name = name
         self.parent = parent
-        self.items = []
+        self.children = []
 
-    def add(self, item: Item):
+    def add(self, item: Item) -> None:
         print(f'Creating item {item}...')
         item.parent = self
-        self.items.append(item)
+        self.children.append(item)
 
-    def remove(self, item: Item):
-        for component in self.items:
+    def remove(self, item: Item) -> None:
+        for component in self.children:
             if component.name == item.name:
                 print(f'Removing the item {item}...')
                 component.parent = None
-                self.items.remove(component)
+                self.children.remove(component)
 
     def list_content(self) -> t.List[Item]:
-        return self.items
+        return self.children
 
     def get_size(self) -> int:
-        return sum(item.get_size() for item in self.items)
+        return sum(child.get_size() for child in self.children)
 
     def search(self, name: str) -> t.List[Item]:
         results = []
         if self.name == name:
             results.append(self)
 
-        for item in self.items:
-            results.extend(item.search(name))
+        for child in self.children:
+            results.extend(child.search(name))
 
         return results
 
@@ -87,7 +86,7 @@ class Folder(Item):
 
         return os.path.join(self.parent.get_path(), self.name)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'Folder({self.name})'
 
 
