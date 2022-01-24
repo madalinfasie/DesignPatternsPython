@@ -30,18 +30,23 @@ class AccountState(enum.Enum):
 
 
 class Account(abc.ABC):
+    @abc.abstractmethod
     def balance(self) -> float:
         pass
 
+    @abc.abstractmethod
     def transfer(self, account: 'Account', amount: float) -> None:
         pass
 
+    @abc.abstractmethod
     def close(self) -> None:
         pass
 
+    @abc.abstractmethod
     def borrow(self, amount: float) -> None:
         pass
 
+    @abc.abstractmethod
     def display(self) -> str:
         pass
 
