@@ -31,7 +31,7 @@ class ElevatorState(enum.Enum):
 
 # Receivers
 class EmergencyCenter:
-    def call(self):
+    def call(self) -> None:
         print('Calling emergency service!')
 
 
@@ -42,20 +42,20 @@ class ElevatorApi:
         self.doors = DoorState.OPEN
         self.state = ElevatorState.IDLE
 
-    def switch_low_energy_mode(self):
+    def switch_low_energy_mode(self) -> None:
         self.lights_intensity = Lights.LOW
 
-    def on_floor(self):
+    def on_floor(self) -> None:
         return self.state == ElevatorState.IDLE
 
-    def close_doors(self):
+    def close_doors(self) -> None:
         self.doors = DoorState.CLOSED
 
-    def open_doors(self):
+    def open_doors(self) -> None:
         if self.state == ElevatorState.IDLE:
             self.doors = DoorState.OPEN
 
-    def move_to_floor(self, floor: int):
+    def move_to_floor(self, floor: int) -> None:
         """ This method is best written as an async method with a requests queue
         But we'll ignore that for the sake of brevity
         """
@@ -129,7 +129,10 @@ class ElevatorButton:
 
 # Application
 class Elevator:
-    def __init__(self, max_floors: int, elevator_api, emergency_center):
+    def __init__(self,
+            max_floors: int,
+            elevator_api: ElevatorApi,
+            emergency_center: EmergencyCenter):
         self.max_floors = max_floors
         self.elevator_api = elevator_api
         self.emergency_center = emergency_center
@@ -150,7 +153,7 @@ class Elevator:
         self.board['door_closed'] = ElevatorButton(door_closed_cmd)
         self.board['emergency'] = ElevatorButton(emergency_cmd)
 
-    def select(self, selection: str):
+    def select(self, selection: str) -> None:
         if selection.isnumeric() and int(selection) > self.max_floors:
             print(f'Not a valid floor number {selection}!')
             return
